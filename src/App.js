@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { auth } from "./firebase/init";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
 function App() {
+  const [user, setUser] = React.useState({});
+  function register() {
+    createUserWithEmailAndPassword(auth, "email@email.com", "test123")
+      .then((user) => {})
+      .catch((error) => {});
+  }
+  function login() {
+    signInWithEmailAndPassword(auth, "email@email.com", "test123")
+      .then(({ user }) => {
+        setUser(user);
+      })
+      .catch((error) => {
+        setErrorMessage("The password is invalid");
+      });
+  }
+
+  function logout() {
+    signOut(auth);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onCLick={register}>Register</button>
+      <button onCLick={login}>Login</button>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 }
