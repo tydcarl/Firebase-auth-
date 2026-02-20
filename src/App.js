@@ -26,6 +26,7 @@ function App() {
 
   function logout() {
     signOut(auth);
+    setUser({});
   }
 
   return (
@@ -33,6 +34,7 @@ function App() {
       <button onCLick={register}>Register</button>
       <button onCLick={login}>Login</button>
       <button onClick={logout}>Logout</button>
+      {user.email}
     </div>
   );
 }
