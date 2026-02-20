@@ -5,10 +5,22 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 function App() {
   const [user, setUser] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setLoading(false);
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, []);
+
   function register() {
     createUserWithEmailAndPassword(auth, "email@email.com", "test123")
       .then((user) => {})
@@ -34,7 +46,7 @@ function App() {
       <button onCLick={register}>Register</button>
       <button onCLick={login}>Login</button>
       <button onClick={logout}>Logout</button>
-      {user.email}
+      {loading ? 'loading...' : user.email}
     </div>
   );
 }
