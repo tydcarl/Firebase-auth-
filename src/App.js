@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  setErrorMessage,
 } from "firebase/auth";
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
       <button onCLick={register}>Register</button>
       <button onCLick={login}>Login</button>
       <button onClick={logout}>Logout</button>
-      {loading ? 'loading...' : user.email}
+      {loading ? "loading..." : user.email}
     </div>
   );
 }
