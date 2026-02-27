@@ -14,7 +14,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    onAuthStateChanged(, (user) => {
+    onAuthStateChanged((user) => {
       setLoading(false);
       if (user) {
         setUser(user);
