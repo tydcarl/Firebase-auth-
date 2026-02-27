@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { auth } from "./firebase/init";
-import {
+import { getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -14,7 +14,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(, (user) => {
       setLoading(false);
       if (user) {
         setUser(user);
