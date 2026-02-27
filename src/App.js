@@ -1,20 +1,20 @@
 import React from "react";
 import "./App.css";
-import { auth } from "./firebase/init";
-import { getAuth,
+import { auth, db } from "./firebase/init";
+import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  setErrorMessage,
 } from "firebase/auth";
 
 function App() {
   const [user, setUser] = React.useState({});
   const [loading, setLoading] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   React.useEffect(() => {
-    onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       setLoading(false);
       if (user) {
         setUser(user);
@@ -44,10 +44,11 @@ function App() {
 
   return (
     <div className="App">
-      <button onCLick={register}>Register</button>
-      <button onCLick={login}>Login</button>
+      <button onClick={register}>Register</button>
+      <button onClick={login}>Login</button>
       <button onClick={logout}>Logout</button>
       {loading ? "loading..." : user.email}
+      {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
     </div>
   );
 }
