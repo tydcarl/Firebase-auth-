@@ -14,9 +14,10 @@ function App() {
   const [loading, setLoading] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  function updatePost() {
+  async function updatePost() {
       const hardcodedId = "DxvWjMKPDuhZwYbH7s26";
       const postRef = doc(db, "posts", hardcodedId);
+      const post = await getPostById(hardcodedId)
       const post = {
         description: "Finish Frontend Simplified"
         uid: "1"
@@ -40,11 +41,11 @@ function App() {
 
   }
 
-  async function getPostById() {
+  async function getPostById(id) {
     const hardcodedId = "DxvWjMKPDuhZwYbH7s26";
     const postRef = doc(db, "posts", hardcodedId);
     const postSnap = await getDoc(postRef);
-    const post = postSnap.data();
+    return postSnap.data();
 
   }
 
