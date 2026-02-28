@@ -16,7 +16,7 @@ function App() {
 
   function createPost() {
     const post ={
-      title: "Finish Interview Section",
+      title: "Finish Firebase Section",
       description: "Do Frontend  Simplfied",
       uid: user.uid, 
     };
@@ -29,11 +29,22 @@ function App() {
 
   }
 
-  function getPostById() {
+  async function getPostById() {
     const hardcodedId = "DxvWjMKPDuhZwYbH7s26";
     const postRef = doc(db, "posts", hardcodedId);
+    const postSnap = await getDoc(postRef);
+    const post = postSnap.data();
+
   }
 
+  async function getPostByUid() {
+    const postCollectionRef = await query(
+      collection(db, "posts"),
+      where("uid", "==", user.uid)
+    );
+    const { docs } = await getDocs(postCollectionRef);
+  }
+  
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setLoading(false);
@@ -72,6 +83,7 @@ function App() {
       <button onClick={createPost}>Create Post</button>
       <button onClick={getAllPosts}>Get All Posts</button>
       <button onClick={getPostById}>Get Post By Id</button>
+      <button onClick={getPostByUid}>Get Post By Uid</button>
       {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
     </div>
   );
