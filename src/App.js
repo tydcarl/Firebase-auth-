@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { auth, db } from "./firebase/init";
-import { collection, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore"
+import { collection, addDoc, getDocs, getDoc, doc, query, where, updateDoc } from "firebase/firestore"
 import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,6 +13,17 @@ function App() {
   const [user, setUser] = React.useState({});
   const [loading, setLoading] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  function updatePost() {
+      const hardcodedId = "DxvWjMKPDuhZwYbH7s26";
+      const postRef = doc(db, "posts", hardcodedId);
+      const post = {
+        description: "Finish Frontend Simplified"
+        uid: "1"
+        title: "Land a $300k Job"
+      };
+      updateDoc(postRef, newPost);
+  }
 
   function createPost() {
     const post ={
@@ -84,6 +95,7 @@ function App() {
       <button onClick={getAllPosts}>Get All Posts</button>
       <button onClick={getPostById}>Get Post By Id</button>
       <button onClick={getPostByUid}>Get Post By Uid</button>
+      <button onClick={updatePost}>Update Post</button>
       {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
     </div>
   );
